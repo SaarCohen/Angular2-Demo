@@ -11,10 +11,8 @@ export class PersondisplayComponent implements OnInit {
   @Input()
   personModel: PersonModel = new PersonModel();
 
-  /*constructor();
-  constructor(injector: Injector);*/
-  constructor(/*private injector?: Injector*/) { 
-    /*if(injector) {
+  constructor(private injector: Injector) { 
+    if(injector) {
     	let data = injector.get('personModel', null);
     	if(data) {
     		this.personModel.firstname = data.firstname;
@@ -22,7 +20,7 @@ export class PersondisplayComponent implements OnInit {
     		this.personModel.sex = data.sex || this.personModel.sex;
     		this.personModel.setImage();
     	}
-    }*/
+    }
   }
 
   ngOnInit() {
