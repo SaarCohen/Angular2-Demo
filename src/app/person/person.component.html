@@ -1,0 +1,59 @@
+<div class="form-horizontal" style="padding:15px;">
+	<h3>
+		Person Details
+	</h3>
+	<form #personForm='ngForm'>
+	<div class="form-group">
+		<label class="col-md-2">
+			Firstname: <input name='firstname' required type='text' [(ngModel)]='model.firstname' #fn='ngModel' />
+			<div *ngIf="fn.errors && (fn.dirty || fn.touched)"
+			class="alert alert-danger">
+			<div [hidden]="!fn.errors.required">
+				Firstname is required
+			</div>
+			</div>
+	</label>
+	<label class="col-md-2">
+		Surname: <input name='surname' required type='text' [(ngModel)]='model.surname' #sn='ngModel'/>
+		<div *ngIf="sn.errors && (sn.dirty || sn.touched)"
+			class="alert alert-danger">
+			<div [hidden]="!sn.errors.required">
+				Surname is required
+			</div>
+		</div>
+	</label>
+	<div class="col-md-2">
+		<label>
+			<input type="radio" [(ngModel)]="model.sex" required name="sex" value="male">Male
+		</label>&nbsp;&nbsp;&nbsp;
+		<label>
+			<input type="radio" [(ngModel)]="model.sex" required name="sex" value="female">Female
+		</label>
+	</div>
+	<label class="col-md-2">Fullname: <span class='text-danger'>{{ model.fullName() }}</span></label>
+	<div class=col-md-2><img style="width: 16px;height: 16px;" *ngIf='model.imageUrl' [src]="model.imageUrl" />
+		<button [disabled]="!personForm.valid" type="button" class="btn btn-sm btn-primary"  (click)="add(personForm.valid)">Add</button>
+	</div>
+	<br/>
+</div>
+</form>
+<button class="btn btn-sm btn-success" type="button" (click)="loadAll()">Get All</button>
+<br/><br/>
+<div *ngIf="personList" class="panel panel-default col-md-12">
+	<br/>
+	<div *ngFor="let person of personList">
+		<person-display [personModel]='person'></person-display>
+	</div>
+	<div *ngIf="personList">
+		<br/>
+		Search: <input #search type='text' (keyup)='loadAll(search.value)' /> 
+		<br/><br/>
+	</div>
+</div>
+<pre *ngIf='personForm.valid'>Person Model: <br>{{personForm.value | json}}</pre>
+</div>
+
+<div class='clearfix'>
+<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
+</div>
+<app-message [title]="'Our Message Box'" [modalName]="'myModal'" [component]="'PersondisplayComponent'" [messageComponentData]='{personModel: { firstname: "abcd", surname: "abd",  sex: "q"} }'></app-message>
